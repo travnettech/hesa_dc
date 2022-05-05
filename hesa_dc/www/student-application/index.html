@@ -1,0 +1,38 @@
+{% extends "templates/web.html" %}
+{% block title %}
+{{ _("My Application") }}
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="student-application/index.js"></script>
+<script type="text/javascript" src="/assets/js/control.min.js"></script>
+<script type="text/javascript" src="/assets/js/dialog.min.js"></script>
+<script type="text/javascript" src="/assets/js/moment-bundle.min.js"></script>
+{% endblock %}
+{% block page_content %}
+
+<div class="form__container">
+    <div class="title__container">
+        <h1>Your Applications</h1>
+        <p>Follow the simple steps to complete your application</p>
+	{{ testing }}
+    </div>
+    <div class="body__container">
+	{% include "/templates/includes/left_banner.html"%}
+	<div class="right__container">
+	    {{ frappe.render_template("/templates/includes/form1.html",user)}}
+            <!--{% include "/templates/includes/form1.html"%}-->
+	    {% include "/templates/includes/form2.html"%}
+	    {% include "/templates/includes/form3.html"%}
+            {% include "/templates/includes/form4.html"%}
+	    {% include "/templates/includes/form5.html"%}
+            {% include "/templates/includes/form6.html"%}
+	    {% include "/templates/includes/form7.html"%}
+            {% include "/templates/includes/form8.html"%}
+            {% include "/templates/includes/form9.html"%}
+            {% include "/templates/includes/form10.html"%}
+            {% include "/templates/includes/form11.html"%}
+            {% include "/templates/includes/form12.html"%}
+	    {% include "/templates/includes/form13.html"%}
+	</div>
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+<fieldset class="active__form" id="form7">
+    <div class="sub__title__container">
+        <div>
+            <p>Step 6/12</p>
+            <h2>Employment</h2>
+        </div>
+        <div class="save"><button class="btn btn-primary" id="save_btn">Save</button></div>
+    </div>
+    <div class="input__container">
+        <label for="employment_checkbox">I have not been in employment</label>
+        <div class="radio_button">
+            <input type="radio" name="employment" id="employment_checkbox" value="yes" checked>Yes&nbsp;
+            <input type="radio" name="employment" id="employment_checkbox" value="no">No
+        </div>
+        <label class="reqd" for="employer">Employer</label>
+        <input class="input-with-feedback form-control" type="text" id="employer">
+        <label class="reqd" for="job_description">Job Description</label>
+        <input class="input-with-feedback form-control" type="text" id="job_description">
+        <label for="main_responsibility">Main Responsibility</label>
+        <textarea class="input-with-feedback form-control" id="main_responsibility" rows="4" cols="10"></textarea>
+        <div class="address_row">
+            <div class="address_col">
+                <label class="reqd" for="job_start_date">Start Date</label>
+                <input class="input-with-feedback form-control" type="date" id="job_start_date">
+            </div>
+            <div class="address_col">
+                <label for="job_ending_date">End Date</label>
+                <input class="input-with-feedback form-control" type="date" id="job_ending_date">
+            </div>
+        </div>
+        <label class="reqd" for="job_contact_name">Contact Name</label>
+        <input class="input-with-feedback form-control" type="text" id="job_contact_name">
+
+        <div class="buttons"> <button class="btn btn-primary prev__btn" onclick="prevForm();">Back</button> <button class="btn btn-primary nxt__btn" onclick="nextForm();">Next</button> </div>
+    </div>
+</fieldset>

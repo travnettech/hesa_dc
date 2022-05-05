@@ -1,0 +1,42 @@
+<fieldset class="active__form" id="form2">
+    <div class="sub__title__container">
+        <div>
+            <p>Step 1/12</p>
+            <h2>Your Details</h2>
+        </div>
+        <div class="save"><button class="btn btn-primary" id="save_btn">Save</button></div>
+    </div>
+    <div class="input__container">
+        <label for="title">Title</label>
+        <select class="input-with-feedback form-control ellipsis" name="title" id="title">
+            <option value="">(Select)</option>
+            <option value="Dr">Dr</option>
+            <option value="Miss">Miss</option>
+            <option value="Mr">Mr</option>
+            <option value="Mrs">Mrs</option>
+            <option value="Ms">Ms</option>
+        </select>
+        <label for="previous_last_name">Previous Last Name</label>
+        <input class="input-with-feedback form-control" type="text" id="previous_last_name">
+        <label class="reqd" for="ni_number">National Insurance Number</label>
+        <input class="input-with-feedback form-control" type="text" id="ni_number">
+        <label class="reqd" for="birthday">Date of Birth</label>
+        <input class="input-with-feedback form-control" type="date" id="birthday">
+        <label class="reqd" for="gender">Gender</label>
+        <select class="input-with-feedback form-control ellipsis" name="gender" id="gender">
+            <option value="">(Select)</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+        </select>
+        <div class="checkbox_div">
+            <input class="input-with-feedback form-control" type="checkbox" id="marketing_checkbox">
+            <label class="reqd" for="marketing_checkbox">
+                <a href=""> Click here to read the Marketing Correspondence Notice.</a>
+            </label>
+        </div>
+        <div class="buttons">
+            <button class="btn btn-primary prev__btn" onclick="prevForm();">Back</button>
+            <button class="btn btn-primary nxt__btn" onclick="nextForm();">Next</button>
+        </div>
+    </div>
+</fieldset>

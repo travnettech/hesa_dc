@@ -1,0 +1,56 @@
+<fieldset class="active__form" id="form10">
+    <div class="sub__title__container">
+        <div>
+            <p>Step 9/12</p>
+            <h2>Education History</h2>
+        </div>
+        <div class="save"><button class="btn btn-primary" id="save_btn">Save</button></div>
+    </div>
+    <div class="input__container">
+        <div class="sub__title__container">
+            <h6>Education</h6>
+        </div>
+        <div class="checkbox_div">
+            <input class="input-with-feedback form-control" type="checkbox" id="education_checkbox">
+            <label for="education_checkbox">I have not attended any educational institution</label>
+        </div>
+        <label class="reqd" for="educational_institution">Educational Institution</label>
+        <input class="input-with-feedback form-control" type="text" id="educational_institution">
+        <label class="reqd" for="educational_institution_address">Address</label>
+        <input class="input-with-feedback form-control" type="text" id="educational_institution_address">
+        <div class="address_row">
+            <div class="address_col">
+                <label for="education_start_year">Start Year</label>
+                <select class="input-with-feedback form-control ellipsis" name="education_start_year" id="education_start_year">
+                    <option value="">(Select)</option>
+                </select>
+            </div>
+            <div class="address_col">
+                <label for="education_end_year">End Year</label>
+                <select class="input-with-feedback form-control ellipsis" name="education_end_year" id="education_end_year">
+                    <option value="">(Select)</option>
+                </select>
+            </div>
+        </div>
+        <div class="sub__title__container">
+            <h6>Awards (Optional)</h6>
+        </div>
+        <label class="reqd" for="awarding_institution">Institution</label>
+        <input class="input-with-feedback form-control" type="text" id="awarding_institution">
+        <label class="reqd" for="awarding_qualification">Qualification</label>
+        <input class="input-with-feedback form-control" type="text" id="awarding_qualification">
+        <div class="address_row">
+            <div class="address_col">
+                <label class="reqd" for="awarding_result">Result</label>
+                <input class="input-with-feedback form-control" type="text" id="awarding_result">
+            </div>
+            <div class="address_col">
+                <label class="reqd" for="award_taken_year">Year Taken</label>
+                <select class="input-with-feedback form-control ellipsis" name="award_taken_year" id="award_taken_year">
+                    <option value="">(Select)</option>
+                </select>
+            </div>
+        </div>
+        <div class="buttons"> <button class="btn btn-primary prev__btn" onclick="prevForm();">Back</button> <button class="btn btn-primary nxt__btn" onclick="nextForm();">Next</button> </div>
+    </div>
+</fieldset>

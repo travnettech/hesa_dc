@@ -1,0 +1,65 @@
+<fieldset class="active__form" id="form6">
+    <div class="sub__title__container">
+        <div>
+            <p>Step 5/12</p>
+            <h2>Language</h2>
+        </div>
+        <div class="save"><button class="btn btn-primary" id="save_btn">Save</button></div>
+    </div>
+    <div class="input__container">
+        <label class="reqd" for="language_checkbox">Is English your first language?</label>
+        <div class="radio_button">
+            <input type="radio" name="laguage" id="language_checkbox" value="yes" checked>Yes&nbsp;
+            <input type="radio" name="laguage" id="language_checkbox" value="no">No
+        </div>
+         <label class="reqd" for="language_qualification_checkbox">Do you have an English language qualification?</label>
+        <div class="radio_button">
+            <input type="radio" name="language_qualification" id="language_qualification_checkbox" value="yes">Yes&nbsp;
+            <input type="radio" name="language_qualification" id="language_qualification_checkbox" value="no">No
+        </div>
+        <div class="address_row">
+            <div class="address_col">
+                <label class="reqd" for="language_qualification">Which English language qualification do you have?</label>
+                <select class="input-with-feedback form-control" name="language_qualification" id="language_qualification">
+                    <option value="">(Select)</option>
+                </select>
+            </div>
+            <div class="address_col">
+                <label class="reqd" for="qualification_date">Date of Qualification</label>
+                <input class="input-with-feedback form-control" type="date" id="qualification_date">
+            </div>
+        </div>
+        <div class="address_row">
+            <div class="address_col">
+                <label for="reference_number">Reference Number</label>
+                <input class="input-with-feedback form-control" type="text" id="reference_number">
+            </div>
+            <div class="address_col">
+                <label class="reqd" for="overall_score">Overall Score</label>
+                <input class="input-with-feedback form-control" type="text" id="overall_score">
+            </div>
+        </div>
+        <div class="address_row">
+            <div class="address_col">
+                <label for="listening">Listening</label>
+                <input class="input-with-feedback form-control" type="text" id="listening">
+            </div>
+            <div class="address_col">
+                <label for="reading">Reading</label>
+                <input class="input-with-feedback form-control" type="text" id="reading">
+            </div>
+        </div>
+        <div class="address_row">
+            <div class="address_col">
+                <label for="writing">Writing</label>
+                <input class="input-with-feedback form-control" type="text" id="writing">
+            </div>
+            <div class="address_col">
+                <label for="speaking">Speaking</label>
+                <input class="input-with-feedback form-control" type="text" id="speaking">
+            </div>
+        </div>
+
+        <div class="buttons"> <button class="btn btn-primary prev__btn" onclick="prevForm();">Back</button> <button class="btn btn-primary nxt__btn" onclick="nextForm();">Next</button> </div>
+    </div>
+</fieldset>

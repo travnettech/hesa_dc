@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include hesa_dc *.css
+recursive-include hesa_dc *.csv
+recursive-include hesa_dc *.html
+recursive-include hesa_dc *.ico
+recursive-include hesa_dc *.js
+recursive-include hesa_dc *.json
+recursive-include hesa_dc *.md
+recursive-include hesa_dc *.png
+recursive-include hesa_dc *.py
+recursive-include hesa_dc *.svg
+recursive-include hesa_dc *.txt
+recursive-exclude hesa_dc *.pyc

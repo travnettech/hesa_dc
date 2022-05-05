@@ -1,0 +1,46 @@
+<fieldset class="active__form" id="form5">
+    <div class="sub__title__container">
+        <div>
+            <p>Step 4/12</p>
+            <h2>Emergency Contact</h2>
+        </div>
+        <div class="save"><button class="btn btn-primary" id="save_btn">Save</button></div>
+    </div>
+    <div class="input__container">
+        <label class="reqd" for="first_name">First Name</label>
+        <input class="input-with-feedback form-control" type="text" id="first_name">
+        <label class="reqd" for="last_name">Last Name</label>
+        <input class="input-with-feedback form-control" type="text" id="last_name">
+        <label class="reqd" for="relationship">Relationship</label>
+        <select class="input-with-feedback form-control ellipsis" name="relationship" id="relationship">
+            <option value="">(Select)</option>
+        </select>
+        <div class="checkbox_div">
+            <input class="input-with-feedback form-control" type="checkbox" id="address_checkbox">
+            <label for="address_checkbox">Same as Home Address</label>
+        </div>
+        <div class="address_row">
+            <div class="address_col">
+                <label class="reqd" for="contact_country">Country</label>
+                <select class="input-with-feedback form-control ellipsis" name="contact_country" id="contact_country">
+                    <option value="">(Select)</option>
+                </select>
+            </div>
+            <div class="address_col">
+                 <label class="reqd" for="contact_address">Address</label>
+                 <input class="input-with-feedback form-control" type="text" id="contact_address">
+            </div>
+        </div>
+        <div class="address_row">
+            <div class="address_col">
+                <label class="reqd" for="contact_postcode">Postcode</label>
+                <input class="input-with-feedback form-control" type="text" id="contact_postcode">
+            </div>
+            <div class="address_col">
+                <label class="reqd" for="contact_phone">Phone</label>
+                <input class="input-with-feedback form-control" type="text" id="contact_phone">
+            </div>
+        </div>
+        <div class="buttons"> <button class="btn btn-primary prev__btn" onclick="prevForm();">Back</button> <button class="btn btn-primary nxt__btn" onclick="nextForm();">Next</button> </div>
+    </div>
+</fieldset>

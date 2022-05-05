@@ -1,0 +1,33 @@
+<fieldset id="form1">
+    <div class="sub__title__container ">
+       <div>
+             <p>Step 1/12</p>
+             <h2>Your Details</h2>
+             <p>Please fill the (*) marked fields</p>
+		{{testing}}
+       </div>
+    </div>
+    <div class="input__container">
+        <label class="control-label reqd" for="first_name">First Name</label>
+        <input class="input-with-feedback form-control" type="text" id="first_name" value="{%if current_user%}{{current_user.first_name}}{%endif%}"> 
+        <label class="control-label" for="middle_name">Middle Name</label>
+        <input class="input-with-feedback form-control" type="text" id="middle_name" value="{%if current_user%}{{current_user.middle_name}}{%endif%}">
+        <label class="control-label reqd" for="last_name">Last Name</label>
+        <input class="input-with-feedback form-control" type="text" id="last_name" value="{%if current_user%}{{current_user.last_name}}{%endif%}">
+        <label for="student_email_id reqd">Email Address</label>
+        <input class="input-with-feedback form-control" type="email" id="student_email_id" value="">
+        <label class="reqd" for="program">Program</label>
+        {% set programs = frappe.get_all('Program',fields=['name', 'courseid']) %}
+        <select class="input-with-feedback form-control ellipsis" name="program" id="program">
+            <option value="">(Select)</option>
+            {% for program in programs %}
+                <option value="{{program.courseid}}" {{ "selected='selected'" if current_user and current_user.program == program.name else "" }}>{{program.name}}</option>
+            {% endfor %}
+        </select>
+       <div class="checkbox_div">
+            <input class="input-with-feedback form-control" type="checkbox" id="terms_and_conditions">
+            <label class="reqd" for="terms_and_conditions"><a href="https://nelsoncollege.ac.uk/privacy">Click here to read the Terms and Conditions and then tick to accept.</a></label>
+        </div>
+        <div class="buttons"> <button class="btn btn-primary nxt__btn" onclick="nextForm()"> Next</button></div>
+    </div>
+</fieldset>

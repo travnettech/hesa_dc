@@ -1,0 +1,102 @@
+<fieldset class="active__form" id="form4">
+    <div class="sub__title__container">
+        <div>
+            <p>Step 3/12</p>
+            <h2>Address</h2>
+        </div>
+        <div class="save"><button class="btn btn-primary" id="save_btn">Save</button></div>
+    </div>
+    <div class="input__container">
+        <div class="sub__title__container">
+            <h6>Home Address</h6>
+        </div>
+        <div class="address_row">
+            <div class="address_col">
+                <label class="reqd" for="country">Country</label>
+                <select class="input-with-feedback form-control ellipsis" name="country" id="country">
+                    <option value="">(Select)</option>
+                </select>
+            </div>
+            <div class="address_col">
+                <label class="reqd" for="postcode">Postcode</label>
+                <input class="input-with-feedback form-control" type="text" id="postcode">
+            </div>
+        </div>
+        <label class="reqd" for="address_line_1">Address Line 1</label>
+        <input class="input-with-feedback form-control" type="text" id="address_line_1">
+        <div class="address_row">
+            <div class="address_col">
+                 <label for="address_line_2">Address Line 2</label>
+                 <input class="input-with-feedback form-control" type="text" id="address_line_2">
+            </div>
+            <div class="address_col">
+                 <label class="reqd" for="address_line_3">Address Line 3</label>
+                 <input class="input-with-feedback form-control" type="text" id="address_line_3">
+            </div>
+        </div>
+        <div class="address_row">
+            <div class="address_col">
+                <label for="address_line_4">Address Line 4</label>
+                <input class="input-with-feedback form-control" type="text" id="address_line_4">
+            </div>
+            <div class="address_col">
+                <label for="address_line_5">Address Line 5</label>
+                <input class="input-with-feedback form-control" type="text" id="address_line_5">
+            </div>
+        </div>
+        <div class="address_row">
+            <div class="address_col">
+                <label class="reqd" for="phone">Phone</label>
+                <input class="input-with-feedback form-control" type="tel" id="phone">
+            </div>
+            <div class="address_col">
+                <label class="reqd" for="mobile">Mobile</label>
+                <input class="input-with-feedback form-control" type="tel" id="mobile">
+            </div>
+        </div>
+        <div class="checkbox_div">
+            <input class="input-with-feedback form-control" type="checkbox" id="address_checkbox">
+            <label for="address_checkbox">Same as Home Address</label>
+        </div>
+    </div>
+    <div class="input__container">
+        <div class="sub__title__container">
+            <h6>Mailing Address</h6>
+        </div>
+        <div class="address_row">
+            <div class="address_col">
+                <label class="reqd" for="mailing_country">Country</label>
+                <select class="input-with-feedback form-control ellipsis" name="mailing_country" id="mailing_country">
+                    <option value="">(Select)</option>
+                </select>
+            </div>
+            <div class="address_col">
+                <label class="reqd" for="mailing_postcode">Postcode</label>
+                <input class="input-with-feedback form-control" type="text" id="mailing_postcode">
+            </div>
+        </div>
+        <label class="reqd" for="mailing_address_line_1">Address Line 1</label>
+        <input class="input-with-feedback form-control" type="text" id="mailing_address_line_1">
+        <div class="address_row">
+            <div class="address_col">
+                <label for="mailing_address_line_2">Address Line 2</label>
+                <input class="input-with-feedback form-control" type="text" id="mailing_address_line_2">
+            </div>
+            <div class="address_col">
+                <label class="reqd" for="mailing_address_line_3">Address Line 3</label>
+                <input class="input-with-feedback form-control" type="text" id="mailing_address_line_3">
+            </div>
+        </div>
+        <div class="address_row">
+            <div class="address_col">
+                <label for="mailing_address_line_4">Address Line 4</label>
+                <input class="input-with-feedback form-control" type="text" id="mailing_address_line_4">
+            </div>
+            <div class="address_col">
+                <label for="mailing_address_line_5">Address Line 5</label>
+                <input class="input-with-feedback form-control" type="text" id="mailing_address_line_5">
+            </div>
+        </div>
+        <div class="buttons"> <button class="btn btn-primary prev__btn" onclick="prevForm();">Back</button> <button class="btn btn-primary nxt__btn" onclick="nextForm();">Next</button> </div>
+    </div>
+</fieldset>

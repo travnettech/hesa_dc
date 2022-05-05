@@ -1,0 +1,33 @@
+<fieldset class="active__form" id="form13">
+    <div class="sub__title__container">
+        <div>
+            <p>Step 12/12</p>
+            <h2>Review</h2>
+        </div>
+    </div>
+    <div class="input__container">
+        <label class="control-label reqd" for="first_name">First Name</label>
+        <input class="input-with-feedback form-control" type="text" id="first_name">
+        <label class="control-label reqd" for="last_name">Last Name</label>
+        <input class="input-with-feedback form-control" type="text" id="last_name">
+        <label for="email_address reqd">Email Address</label>
+        <input class="input-with-feedback form-control" type="email" id="email_address">
+        <label class="reqd" for="program">Program</label>
+        <select class="input-with-feedback form-control ellipsis" name="program" id="program">
+            <option value="">(Select)</option>
+        </select>
+        <label class="reqd" for="ni_number">National Insurance Number</label>
+        <input class="input-with-feedback form-control" type="text" id="ni_number">
+        <label class="reqd" for="birthday">Date of Birth</label>
+        <input class="input-with-feedback form-control" type="date" id="birthday">
+        <label class="reqd" for="postcode">Postcode</label>
+        <input class="input-with-feedback form-control" type="text" id="postcode">
+        <label class="reqd" for="mobile">Mobile</label>
+        <input class="input-with-feedback form-control" type="tel" id="mobile">
+
+        <div class="buttons">
+            <button class="btn btn-primary prev__btn" onclick="prevForm();">Back</button>
+            <button class="btn btn-primary nxt__btn" id="submitBtn" onclick="nextForm();">Next</button>
+        </div>
+    </div>
+</fieldset>

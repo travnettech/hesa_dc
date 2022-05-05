@@ -4,4 +4,4 @@ HESA Data Collection
 
 #### License
 
-MIT
+Sitenet Tech

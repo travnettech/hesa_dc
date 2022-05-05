@@ -409,4 +409,3 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=20
     with open(file_name, "w") as f:
         f.write(xml_str)
     return xml_str
-

@@ -2,8 +2,6 @@
 # For license information, please see license.txt
 
 import frappe
-import frappe.website.render
-
 
 @frappe.whitelist()
 def get_all_hesa_returns():

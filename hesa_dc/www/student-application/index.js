@@ -43,7 +43,7 @@ function nextForm() {
     })
     if (flag===true){
 	flag = false;
-        return;
+       // return;
     }
 
     $('#form'+viewId).find('.input-with-feedback').each(function(){

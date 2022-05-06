@@ -112,10 +112,10 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=20
             delorg.appendChild(root.createTextNode(del_org_loc.get('delorg','')))
             delivery_organisation_location.appendChild(delorg)
 
-            #<DELORGPROP>
-            delorgprop = root.createElement('DELORGPROP')
-            delorgprop.appendChild(root.createTextNode(del_org_loc.get('delorgprop','')))
-            delivery_organisation_location.appendChild(delorgprop)
+            # #<DELORGPROP>
+            # delorgprop = root.createElement('DELORGPROP')
+            # delorgprop.appendChild(root.createTextNode(del_org_loc.get('delorgprop','')))
+            # delivery_organisation_location.appendChild(delorgprop)
 
             #<PCODELOC>
             if del_org_loc.get('pcodeloc', None) is not None:

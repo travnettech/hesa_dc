@@ -59,7 +59,7 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=20
     directory_path = frappe.get_site_path('private','files')
     directory_exists = os.path.exists('{0}/hesa_return'.format(directory_path))
     session = academicYear.split('-')[0][-2:]
-    company_data = frappe.db.sql('''SELECT recid, ukprn FROM tabHESA DC Student Alternative WHERE label ="%s"''', [(returnType)], as_dict=1)[0]
+    company_data = frappe.db.sql('''SELECT recid, ukprn FROM `tabHESA DC Student Alternative` WHERE label=%s''', [(returnType)], as_dict=1)[0]
     if not directory_exists:
         os.makedirs('{0}/hesa_return'.format(directory_path))
     file_exists =  os.path.exists('{0}/hesa_return/{1}-HESA-{2}.xml'.format(directory_path,str(session+company_data['recid']),int(datetime.timestamp(today))))

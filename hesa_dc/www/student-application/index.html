@@ -1,3 +1,4 @@
+{% raw %}
 {% extends "templates/web.html" %}
 {% block title %}
 {{ _("My Application") }}
@@ -14,7 +15,6 @@
     <div class="title__container">
         <h1>Your Applications</h1>
         <p>Follow the simple steps to complete your application</p>
-        {{ testing }}
     </div>
     <div class="body__container">
         {% include "/templates/includes/left_banner.html"%}
@@ -35,4 +35,5 @@
             {% include "/templates/includes/form13.html"%}
         </div>
     </div>
-    {% endblock %}
+{% endblock %}
+{% endraw %}

@@ -14,25 +14,25 @@
     <div class="title__container">
         <h1>Your Applications</h1>
         <p>Follow the simple steps to complete your application</p>
-	{{ testing }}
+        {{ testing }}
     </div>
     <div class="body__container">
-	{% include "/templates/includes/left_banner.html"%}
-	<div class="right__container">
-	    {{ frappe.render_template("/templates/includes/form1.html",user)}}
-            <!--{% include "/templates/includes/form1.html"%}-->
-	    {% include "/templates/includes/form2.html"%}
-	    {% include "/templates/includes/form3.html"%}
+        {% include "/templates/includes/left_banner.html"%}
+        <div class="right__container">
+
+            {% include "/templates/includes/form1.html"%}
+            {% include "/templates/includes/form2.html"%}
+            {% include "/templates/includes/form3.html"%}
             {% include "/templates/includes/form4.html"%}
-	    {% include "/templates/includes/form5.html"%}
+            {% include "/templates/includes/form5.html"%}
             {% include "/templates/includes/form6.html"%}
-	    {% include "/templates/includes/form7.html"%}
+            {% include "/templates/includes/form7.html"%}
             {% include "/templates/includes/form8.html"%}
             {% include "/templates/includes/form9.html"%}
             {% include "/templates/includes/form10.html"%}
             {% include "/templates/includes/form11.html"%}
             {% include "/templates/includes/form12.html"%}
-	    {% include "/templates/includes/form13.html"%}
-	</div>
+            {% include "/templates/includes/form13.html"%}
+        </div>
     </div>
-{% endblock %}
+    {% endblock %}

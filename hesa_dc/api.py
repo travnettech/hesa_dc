@@ -15,7 +15,7 @@ def get_all_hesa_returns():
 	#return xml_list
 
 	##Reading from doctype instead of private directory
-	hesa_histories = frappe.db.sql('''SELECT `return_type`,`name`,`creation`,`file_link` FROM `tabHESA DA Return History` ORDER BY `creation` DESC LIMIT 10''')
+	hesa_histories = frappe.db.sql('''SELECT `return_type`,`name`,`creation`,`file_link` FROM `tabHESA DC Return History` ORDER BY `creation` DESC LIMIT 10''')
 	#return hesa_histories
 	html_table = '''<tr><th>Return Type</th><th>File Name</th><th>Created at</th><th class="text-center">Download</th><th class="text-center">Delete</th></tr>'''
 	inner_table = ''
@@ -44,7 +44,7 @@ def get_hesa_returns_data(file_name):
 def delete_hesa_return_file(file_name):
 	import os
 	file_path = file_name
-	frappe.delete_doc('HESA DA Return History', file_name.split('/')[-1])
+	frappe.delete_doc('HESA DC Return History', file_name.split('/')[-1])
 	os.remove(file_path)
 	return True
 
@@ -65,7 +65,7 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=20
     file_exists =  os.path.exists('{0}/hesa_return/{1}-HESA-{2}.xml'.format(directory_path,str(session+company_data['recid']),int(datetime.timestamp(today))))
     if file_exists:
         return False
-    doc = frappe.new_doc('HESA DA Return History')
+    doc = frappe.new_doc('HESA DC Return History')
     from xml.dom import minidom
         
     ##company_data = frappe.db.sql('''SELECT recid, ukprn FROM tabCompany WHERE name = "Nelson College London"''', as_dict=1)[0]

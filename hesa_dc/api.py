@@ -1,5 +1,55 @@
+# Copyright (c) 2022, Sitenet and contributors
+# For license information, please see license.txt
+
 import frappe
 import frappe.website.render
+
+
+@frappe.whitelist()
+def get_all_hesa_returns():
+	#import os
+	#file_path = '{0}/hesa_return'.format(frappe.get_site_path('private', 'files'))
+	#xml_list = []
+	#if os.path.exists(file_path):
+	#	for filename in os.listdir(file_path):
+	#		if filename.endswith(".xml"):
+	#			xml_list.append(filename)
+	#return xml_list
+
+	##Reading from doctype instead of private directory
+	hesa_histories = frappe.db.sql('''SELECT `return_type`,`name`,`creation`,`file_link` FROM `tabHESA DA Return History` ORDER BY `creation` DESC LIMIT 10''')
+	#return hesa_histories
+	html_table = '''<tr><th>Return Type</th><th>File Name</th><th>Created at</th><th class="text-center">Download</th><th class="text-center">Delete</th></tr>'''
+	inner_table = ''
+	for history in hesa_histories:
+		inner_table = inner_table + '''<tr><td>%s</td>'''%history[0]
+		inner_table = inner_table + '''<td>%s</td>'''%history[1]
+		inner_table = inner_table + '''<td>%s</td>'''%history[2].strftime("%Y-%m-%d, %H:%M:%S")
+		inner_table = inner_table + '''<td class="text-center"><a href="#" class="download" data-filename="%s"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/></svg></a></td>'''%history[3]
+		inner_table = inner_table + '''<td class="text-center"><a href="#" class="delete" data-filename="%s"><svg class="icon  icon-sm" style=""><use class="" href="#icon-delete"></use></svg></a></td></tr>'''%history[3]
+
+	table = '''<table class="table table-hover">'''+html_table+inner_table
+	table = table + '''</table>'''
+	return table
+
+@frappe.whitelist()
+def get_hesa_returns_data(file_name):
+	import os
+	import xml.dom.minidom
+	#file_path = '{0}/hesa_return/{1}'.format(frappe.get_site_path('private', 'files'),file_name)
+	dom = xml.dom.minidom.parse(file_name)
+	xml_as_string = dom.toxml()
+	return xml_as_string
+
+
+@frappe.whitelist()
+def delete_hesa_return_file(file_name):
+	import os
+	file_path = file_name
+	frappe.delete_doc('HESA DA Return History', file_name.split('/')[-1])
+	os.remove(file_path)
+	return True
+
 
 @frappe.whitelist()
 def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=2021, academicTerm=None):

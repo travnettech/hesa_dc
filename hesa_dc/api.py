@@ -68,9 +68,9 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
     doc = frappe.new_doc('HESA DC Return History')
 
     from xml.dom import minidom
-    program_sql = "SELECT * FROM tabProgram Enrollment WHERE academic_year={}".format(academicYear)
+    program_sql = '''SELECT * FROM tabProgram Enrollment WHERE academic_year=%s''',[(academicYear)]
     if academicTerm is not None or academicTerm is not "":
-        program_sql += " and academic_term={}".format(academicTerm)
+        program_sql += ''' and academic_term=%s''',[(academicTerm)]
     all_program_data = frappe.db.sql(program_sql,as_dict=1)
     # all_student_data = frappe.db.sql('''SELECT * FROM tabStudent''',as_dict=1)
 

@@ -70,13 +70,14 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
     from xml.dom import minidom
     program_sql = 'SELECT * FROM tabProgram Enrollment'
     #WHERE academic_year=%s
-    return program_sql
+    
     if academicTerm is not None or academicTerm is not "":
         program_sql += ' and academic_term=%s'
         param = (academicYear, academicTerm)
     else:
         param = (academicYear)
-    all_program_data = frappe.db.sql(program_sql,param,as_dict=1)
+    all_program_data = frappe.db.sql(program_sql,as_dict=1)
+    return program_sql
     # all_student_data = frappe.db.sql('''SELECT * FROM tabStudent''',as_dict=1)
 
     root = minidom.Document()

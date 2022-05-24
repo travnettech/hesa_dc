@@ -99,7 +99,8 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
     ukprn.appendChild(root.createTextNode(company_data['ukprn']))
     provider.appendChild(ukprn)
 
-    program_list, student_list = []
+    program_list = []
+    student_list = []
 
     for program_data in all_program_data:
 

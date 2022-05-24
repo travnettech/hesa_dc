@@ -70,7 +70,7 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
     from xml.dom import minidom
     program_sql = 'SELECT * FROM `tabProgram Enrollment` WHERE academic_year=%s'
    
-    if academicTerm is not None or academicTerm != "":
+    if academicTerm != "":
         program_sql += ' and academic_term=%s'
         param = (academicYear, academicTerm)
     else:

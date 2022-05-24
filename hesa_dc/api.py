@@ -76,8 +76,6 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
     else:
         param = (academicYear)
     all_program_data = frappe.db.sql(program_sql, param, as_dict=1)
-    # return {'academicYear':academicYear, 'academicTerm':academicTerm, 'param':param, 'program_sql':program_sql}
-    return all_program_data
 
     # all_student_data = frappe.db.sql('''SELECT * FROM tabStudent''',as_dict=1)
 
@@ -143,6 +141,7 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
         ttcid.appendChild(root.createTextNode(str(course_data.get('ttcid','1'))))
         course.appendChild(ttcid)
         ##TODO update topic according to how the fields are designed later
+        return {'root':root}
 
         courses = course_data.get('courses')
 

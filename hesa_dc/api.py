@@ -99,13 +99,21 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
     ukprn.appendChild(root.createTextNode(company_data['ukprn']))
     provider.appendChild(ukprn)
 
+    program_list, student_list = []
+
     for program_data in all_program_data:
+
+        program_list.append(program_data.get('program'))
+        student_list.append(program_data.get('student'))
+        
+    program_list = list(dict.fromkeys(program_list))
+    student_list = list(dict.fromkeys(student_list))
+    for program in program_list:
         #<Course>
         course = root.createElement('Course')
         provider.appendChild(course)
 
-        program_name = program_data.get('program')
-        course_data = frappe.db.sql('''SELECT * FROM `tabProgram` WHERE program_name=%s''', [(program_name)], as_dict=1)[0]
+        course_data = frappe.db.sql('''SELECT * FROM `tabProgram` WHERE program_name=%s''', [(program)], as_dict=1)[0]
 
         #<COURSEID>
         course_id = root.createElement('COURSEID')

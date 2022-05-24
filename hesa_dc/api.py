@@ -44,7 +44,7 @@ def get_hesa_returns_data(file_name):
 def delete_hesa_return_file(file_name):
 	import os
 	file_path = file_name
-	frappe.delete_doc('HESA DC Return History', file_name.split('/')[-1])
+	frappe.delete_doc('HESA DC Return History', file_name.split('/')[-1], force=1, for_reload=True)
 	os.remove(file_path)
 	return True
 

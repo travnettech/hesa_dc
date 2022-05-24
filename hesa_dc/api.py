@@ -141,7 +141,7 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
         ttcid.appendChild(root.createTextNode(str(course_data.get('ttcid','1'))))
         course.appendChild(ttcid)
         ##TODO update topic according to how the fields are designed later
-        return {'root':str(root)}
+        return root
 
         courses = course_data.get('courses')
 

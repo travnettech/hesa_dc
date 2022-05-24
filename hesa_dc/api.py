@@ -76,7 +76,7 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
     else:
         param = (academicYear)
     all_program_data = frappe.db.sql(program_sql, param, as_dict=1)
-    return all_program_data
+    return {'academicYear':academicYear, 'academicTerm':academicTerm, 'param':param, 'program_sql':program_sql}
     # all_student_data = frappe.db.sql('''SELECT * FROM tabStudent''',as_dict=1)
 
     root = minidom.Document()

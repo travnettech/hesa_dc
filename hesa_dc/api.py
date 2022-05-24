@@ -141,8 +141,6 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
         ttcid.appendChild(root.createTextNode(str(course_data.get('ttcid','1'))))
         course.appendChild(ttcid)
         ##TODO update topic according to how the fields are designed later
-        return root
-
         courses = course_data.get('courses')
 
         # course_topics = frappe.db.sql('''SELECT * FROM `tabCourse` WHERE parent="%s"''' % course_data.get('course_name'),as_dict=1)

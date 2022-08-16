@@ -3,73 +3,78 @@
 
 import frappe
 
+
 @frappe.whitelist()
 def get_all_hesa_returns():
-	#import os
-	#file_path = '{0}/hesa_return'.format(frappe.get_site_path('private', 'files'))
-	#xml_list = []
-	#if os.path.exists(file_path):
-	#	for filename in os.listdir(file_path):
-	#		if filename.endswith(".xml"):
-	#			xml_list.append(filename)
-	#return xml_list
+    # Reading from doctype instead of private directory
+    hesa_histories = frappe.db.sql(
+        '''SELECT `return_type`,`name`,`creation`,`file_link` FROM `tabHESA DC Return History` ORDER BY `creation` 
+        DESC LIMIT 10''')
+    # return hesa_histories
+    html_table = '''<tr><th>Return Type</th><th>File Name</th><th>Created at</th><th 
+    class="text-center">Download</th><th class="text-center">Delete</th></tr> '''
+    inner_table = ''
+    for history in hesa_histories:
+        inner_table = inner_table + '''<tr><td>%s</td>''' % history[0]
+        inner_table = inner_table + '''<td>%s</td>''' % history[1]
+        inner_table = inner_table + '''<td>%s</td>''' % history[2].strftime("%Y-%m-%d, %H:%M:%S")
+        inner_table = inner_table + '''<td class="text-center"><a href="#" class="download" data-filename="%s"><svg 
+        xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" 
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 
+        2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/></svg></a></td>''' % history[3]
+        inner_table = inner_table + '''<td class="text-center"><a href="#" class="delete" data-filename="%s"><svg 
+        class="icon  icon-sm" style=""><use class="" href="#icon-delete"></use></svg></a></td></tr>''' % history[3]
 
-	##Reading from doctype instead of private directory
-	hesa_histories = frappe.db.sql('''SELECT `return_type`,`name`,`creation`,`file_link` FROM `tabHESA DC Return History` ORDER BY `creation` DESC LIMIT 10''')
-	#return hesa_histories
-	html_table = '''<tr><th>Return Type</th><th>File Name</th><th>Created at</th><th class="text-center">Download</th><th class="text-center">Delete</th></tr>'''
-	inner_table = ''
-	for history in hesa_histories:
-		inner_table = inner_table + '''<tr><td>%s</td>'''%history[0]
-		inner_table = inner_table + '''<td>%s</td>'''%history[1]
-		inner_table = inner_table + '''<td>%s</td>'''%history[2].strftime("%Y-%m-%d, %H:%M:%S")
-		inner_table = inner_table + '''<td class="text-center"><a href="#" class="download" data-filename="%s"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/></svg></a></td>'''%history[3]
-		inner_table = inner_table + '''<td class="text-center"><a href="#" class="delete" data-filename="%s"><svg class="icon  icon-sm" style=""><use class="" href="#icon-delete"></use></svg></a></td></tr>'''%history[3]
+    table = '''<table class="table table-hover">''' + html_table + inner_table
+    table = table + '''</table>'''
+    return table
 
-	table = '''<table class="table table-hover">'''+html_table+inner_table
-	table = table + '''</table>'''
-	return table
 
 @frappe.whitelist()
 def get_hesa_returns_data(file_name):
-	import os
-	import xml.dom.minidom
-	#file_path = '{0}/hesa_return/{1}'.format(frappe.get_site_path('private', 'files'),file_name)
-	dom = xml.dom.minidom.parse(file_name)
-	xml_as_string = dom.toxml()
-	return xml_as_string
+    import os
+    import xml.dom.minidom
+    # file_path = '{0}/hesa_return/{1}'.format(frappe.get_site_path('private', 'files'),file_name)
+    dom = xml.dom.minidom.parse(file_name)
+    xml_as_string = dom.toxml()
+    return xml_as_string
 
 
 @frappe.whitelist()
 def delete_hesa_return_file(file_name):
-	import os
-	file_path = file_name
-	frappe.db.delete('HESA DC Return History', {"name": file_name.split('/')[-1]})
-	os.remove(file_path)
-	return True
+    import os
+    file_path = file_name
+    frappe.db.delete('HESA DC Return History', {"name": file_name.split('/')[-1]})
+    os.remove(file_path)
+    return True
 
 
 @frappe.whitelist()
 def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=None, academicTerm=None):
     import os
     from datetime import datetime
-    QUALENT3_List = ['P41', 'P42', 'P46', 'P47', 'P50', 'P51', 'P53', 'P54', 'P62', 'P63', 'P64', 'P65', 'P68', 'P93', 'P94', 'X00', 'X01']
+    QUALENT3_List = ['P41', 'P42', 'P46', 'P47', 'P50', 'P51', 'P53', 'P54', 'P62', 'P63', 'P64', 'P65', 'P68', 'P93',
+                     'P94', 'X00', 'X01']
     DOMICILE_List = ['XF', 'XG', 'XH', 'XI', 'XK', 'XL', 'GG', 'JE', 'IM']
     today = datetime.now()
-    directory_path = frappe.get_site_path('private','files')
+    directory_path = frappe.get_site_path('private', 'files')
     directory_exists = os.path.exists('{0}/hesa_return'.format(directory_path))
     session = academicYear.split('-')[0][-2:]
-    company_data = frappe.db.sql('''SELECT recid, ukprn FROM `tabHESA DC Student Alternative` WHERE label=%s''', [(returnType)], as_dict=1)[0]
+    company_data = \
+        frappe.db.sql('''SELECT recid, ukprn FROM `tabHESA DC Student Alternative` WHERE label=%s''', [(returnType)],
+                      as_dict=1)[0]
     if not directory_exists:
         os.makedirs('{0}/hesa_return'.format(directory_path))
-    file_exists =  os.path.exists('{0}/hesa_return/{1}-HESA-{2}.xml'.format(directory_path,str(session+company_data['recid']),int(datetime.timestamp(today))))
+    file_exists = os.path.exists(
+        '{0}/hesa_return/{1}-HESA-{2}.xml'.format(directory_path, str(session + company_data['recid']),
+                                                  int(datetime.timestamp(today))))
     if file_exists:
         return False
     doc = frappe.new_doc('HESA DC Return History')
 
     from xml.dom import minidom
     program_sql = 'SELECT * FROM `tabProgram Enrollment` WHERE academic_year=%s'
-   
+
     if academicTerm != "":
         program_sql += ' and academic_term=%s'
         param = (academicYear, academicTerm)
@@ -81,20 +86,20 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
 
     root = minidom.Document()
 
-    #<APStudentRecord>
+    # <APStudentRecord>
     ap_student_record = root.createElement('APStudentRecord')
     root.appendChild(ap_student_record)
 
-    #<Provider>
+    # <Provider>
     provider = root.createElement('Provider')
     ap_student_record.appendChild(provider)
 
-    #<RECID>
+    # <RECID>
     recid = root.createElement('RECID')
     recid.appendChild(root.createTextNode(company_data['recid']))
     provider.appendChild(recid)
 
-    #<UKPRN>
+    # <UKPRN>
     ukprn = root.createElement('UKPRN')
     ukprn.appendChild(root.createTextNode(company_data['ukprn']))
     provider.appendChild(ukprn)
@@ -103,25 +108,24 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
     student_list = []
 
     for program_data in all_program_data:
-
         program_list.append(program_data.get('program'))
         student_list.append(program_data.get('student'))
-        
+
     program_list = list(dict.fromkeys(program_list))
     student_list = list(dict.fromkeys(student_list))
     for program in program_list:
-        #<Course>
+        # <Course>
         course = root.createElement('Course')
         provider.appendChild(course)
 
         course_data = frappe.db.sql('''SELECT * FROM `tabProgram` WHERE program_name=%s''', [(program)], as_dict=1)[0]
 
-        #<COURSEID>
+        # <COURSEID>
         course_id = root.createElement('COURSEID')
-        course_id.appendChild(root.createTextNode(str(course_data.get('courseid','0'))))
+        course_id.appendChild(root.createTextNode(str(course_data.get('courseid', '0'))))
         course.appendChild(course_id)
 
-        #<OWNCOURSEID>
+        # <OWNCOURSEID>
         if course_data.get('owncourseid', None) is not None:
             own_course_id = root.createElement('OWNCOURSEID')
             own_course_id.appendChild(root.createTextNode(str(course_data.get('owncourseid'))))
@@ -129,25 +133,26 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
 
         ##TODO Awarding body
 
-        #<COURSEAIM>
+        # <COURSEAIM>
         course_aim = root.createElement('COURSEAIM')
-        course_aim.appendChild(root.createTextNode(course_data.get('courseaim','')))### Change according to database design
+        course_aim.appendChild(
+            root.createTextNode(course_data.get('courseaim', '')))  ### Change according to database design
         course.appendChild(course_aim)
 
-        #<CTITLE>
+        # <CTITLE>
         course_title = root.createElement('CTITLE')
-        course_title.appendChild(root.createTextNode(course_data.get('ctitle','')))
+        course_title.appendChild(root.createTextNode(course_data.get('ctitle', '')))
         course.appendChild(course_title)
 
-        #<REGBODY>
+        # <REGBODY>
         if course_data.get('reg_body', None) is not None:
             reg_body = root.createElement('REGBODY')
             reg_body.appendChild(root.createTextNode(course_data.get('reg_body')))
             course.appendChild(reg_body)
 
-        #<TTCID>
+        # <TTCID>
         ttcid = root.createElement('TTCID')
-        ttcid.appendChild(root.createTextNode(str(course_data.get('ttcid','1'))))
+        ttcid.appendChild(root.createTextNode(str(course_data.get('ttcid', '1'))))
         course.appendChild(ttcid)
         ##TODO update topic according to how the fields are designed later
         courses = course_data.get('courses')
@@ -191,8 +196,7 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
         #         pcodeloc.appendChild(root.createTextNode(del_org_loc.get('pcodeloc','')))
         #         delivery_organisation_location.appendChild(pcodeloc)
 
-            
-    #<Student>
+    # <Student>
     # for student_data in all_student_data:
     #     student = root.createElement('Student')
     #     provider.appendChild(student)
@@ -327,7 +331,6 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
     #                 qualyear.appendChild(root.createTextNode(str(student_data.get('qualyear',''))))
     #                 qualification_on_entry.appendChild(qualyear)
 
-
     #     ##TODO Students Instance - Course
     #     course_enrollment = frappe.db.sql('''SELECT * FROM `tabCourse Enrollment` WHERE student="%s"''' % student_data.get('name'),as_dict=1)
     #     for enroll in course_enrollment:
@@ -350,7 +353,7 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
     #         comdate = root.createElement('COMDATE')
     #         comdate.appendChild(root.createTextNode(str(enroll.get('enrollment_date',''))))
     #         student_instance.appendChild(comdate)
-            
+
     #         #<ENDDATE>##TODO check where enrollment enddate is???
     #         enddate = root.createElement('ENDDATE')
     #         enddate.appendChild(root.createTextNode(str(enroll.get('end_date',''))))
@@ -468,11 +471,13 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
     #     sexort = root.createElement('SEXORT')
     #     sexort.appendChild(root.createTextNode(str(student_data.get('sexort',''))))
     #     student_equality.appendChild(sexort)
-    xml_str = root.toprettyxml(indent ="\t")
-    file_name = "{0}/hesa_return/{1}-HESA-{2}.xml".format(directory_path,str(session+company_data['recid']),int(datetime.timestamp(today)))
-    doc.return_type = session+company_data['recid']
+    xml_str = root.toprettyxml(indent="\t")
+    file_name = "{0}/hesa_return/{1}-HESA-{2}.xml".format(directory_path, str(session + company_data['recid']),
+                                                          int(datetime.timestamp(today)))
+    doc.return_type = session + company_data['recid']
     doc.file_link = file_name
-    doc.file_name =  "{0}-HESA-DC-SA-{1}.xml".format(str(session+company_data['recid']),int(datetime.timestamp(today)))
+    doc.file_name = "{0}-HESA-DC-SA-{1}.xml".format(str(session + company_data['recid']),
+                                                    int(datetime.timestamp(today)))
     doc.insert()
     with open(file_name, "w") as f:
         f.write(xml_str)
@@ -481,9 +486,9 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
 
 @frappe.whitelist()
 def create_interview_event(name, applicant_name):
-	doc = frappe.get_doc('Event', name)
-	doc.append('event_participants', {
-		'reference_doctype': 'Student Applicant',
-		'reference_docname': applicant_name
-	})
-	doc.save()
+    doc = frappe.get_doc('Event', name)
+    doc.append('event_participants', {
+        'reference_doctype': 'Student Applicant',
+        'reference_docname': applicant_name
+    })
+    doc.save()

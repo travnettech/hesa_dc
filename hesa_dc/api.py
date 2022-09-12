@@ -134,7 +134,7 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
             own_course_id = root.createElement('OWNCOURSEID')
             own_course_id.appendChild(root.createTextNode(str(course_data.get('owncourseid'))))
             course.appendChild(own_course_id)
-            
+
         # <AWARDBOD>
         for num in range(1, 9):
             if course_data.get('awardbod_'+str(num), None) is not None:
@@ -164,41 +164,43 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
         ttcid.appendChild(root.createTextNode(get_code_value_only(str(course_data.get('ttcid', '0')))))
         course.appendChild(ttcid)
 
-        for topic in course_data.get('courses', None):
-            #<CourseSubject>
-            course_subject = root.createElement('CourseSubject')
-            course.appendChild(course_subject)
+        if course_data.get('courses', None) is not None:
+            for topic in course_data.get('courses'):
+                #<CourseSubject>
+                course_subject = root.createElement('CourseSubject')
+                course.appendChild(course_subject)
 
-            #<SBJCA>
-            topic_sbjca = root.createElement('SBJCA')
-            topic_sbjca.appendChild(root.createTextNode(get_code_value_only(topic.get('sbjca',''))))
-            course_subject.appendChild(topic_sbjca)
+                #<SBJCA>
+                topic_sbjca = root.createElement('SBJCA')
+                topic_sbjca.appendChild(root.createTextNode(get_code_value_only(topic.get('sbjca',''))))
+                course_subject.appendChild(topic_sbjca)
 
-            #<SBJPCNT>
-            topic_sbjpcnt = root.createElement('SBJPCNT')
-            topic_sbjpcnt.appendChild(root.createTextNode(str(int(topic.get('sbjpcnt','100')))))
-            course_subject.appendChild(topic_sbjpcnt)
+                #<SBJPCNT>
+                topic_sbjpcnt = root.createElement('SBJPCNT')
+                topic_sbjpcnt.appendChild(root.createTextNode(str(int(topic.get('sbjpcnt','100')))))
+                course_subject.appendChild(topic_sbjpcnt)
 
-        for del_org_loc in course_data.get('delivery_organisation_location', None):
-            #<DeliveryOrganisationAndLocation>
-            delivery_organisation_location = root.createElement('DeliveryOrganisationAndLocation')
-            course.appendChild(delivery_organisation_location)
+        if course_data.get('delivery_organisation_location', None) is not None:
+            for del_org_loc in course_data.get('delivery_organisation_location'):
+                #<DeliveryOrganisationAndLocation>
+                delivery_organisation_location = root.createElement('DeliveryOrganisationAndLocation')
+                course.appendChild(delivery_organisation_location)
 
-            #<DELORG>
-            delorg = root.createElement('DELORG')
-            delorg.appendChild(root.createTextNode(get_code_value_only(del_org_loc.get('delorg',''))))
-            delivery_organisation_location.appendChild(delorg)
+                #<DELORG>
+                delorg = root.createElement('DELORG')
+                delorg.appendChild(root.createTextNode(get_code_value_only(del_org_loc.get('delorg',''))))
+                delivery_organisation_location.appendChild(delorg)
 
-            #<DELORGPROP>
-            delorgprop = root.createElement('DELORGPROP')
-            delorgprop.appendChild(root.createTextNode(del_org_loc.get('delorgprop','0')))
-            delivery_organisation_location.appendChild(delorgprop)
+                #<DELORGPROP>
+                delorgprop = root.createElement('DELORGPROP')
+                delorgprop.appendChild(root.createTextNode(del_org_loc.get('delorgprop','0')))
+                delivery_organisation_location.appendChild(delorgprop)
 
-            #<PCODELOC>
-            if del_org_loc.get('pcodeloc', None) is not None:
-                pcodeloc = root.createElement('PCODELOC')
-                pcodeloc.appendChild(root.createTextNode(del_org_loc.get('pcodeloc','')))
-                delivery_organisation_location.appendChild(pcodeloc)
+                #<PCODELOC>
+                if del_org_loc.get('pcodeloc', None) is not None:
+                    pcodeloc = root.createElement('PCODELOC')
+                    pcodeloc.appendChild(root.createTextNode(del_org_loc.get('pcodeloc','')))
+                    delivery_organisation_location.appendChild(pcodeloc)
 
     # <Student>
     # for student_data in all_student_data:

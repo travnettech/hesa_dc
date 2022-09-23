@@ -86,8 +86,6 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
         param = (academicYear)
     all_program_data = frappe.db.sql(program_sql, param, as_dict=1)
 
-    # all_student_data = frappe.db.sql('''SELECT * FROM tabStudent''',as_dict=1)
-
     root = minidom.Document()
 
     # <APStudentRecord>
@@ -202,140 +200,143 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
                     pcodeloc.appendChild(root.createTextNode(del_org_loc.get('pcodeloc','')))
                     delivery_organisation_location.appendChild(pcodeloc)
 
-    # <Student>
-    # for student_data in all_student_data:
-    #     student = root.createElement('Student')
-    #     provider.appendChild(student)
+    #<Student>
+    for student_data in student_list:
+        student = root.createElement('Student')
+        provider.appendChild(student)
 
-    #     #<HUSID>
-    #     husid = root.createElement('HUSID')
-    #     husid.appendChild(root.createTextNode(str(student_data.get('husid',''))))
-    #     student.appendChild(husid)
+        #<HUSID>
+        husid = root.createElement('HUSID')
+        husid.appendChild(root.createTextNode(str(student_data.get('husid',''))))
+        student.appendChild(husid)
 
-    #     #<OWNSTU>
-    #     ownstu = root.createElement('OWNSTU')
-    #     ownstu.appendChild(root.createTextNode(str(student_data.get('ownstu',''))))
-    #     student.appendChild(ownstu)
+        #<OWNSTU>
+        ownstu = root.createElement('OWNSTU')
+        ownstu.appendChild(root.createTextNode(str(student_data.get('ownstu',''))))
+        student.appendChild(ownstu)
 
-    #     #<BIRTHDTE>
-    #     birthdte = root.createElement('BIRTHDTE')
-    #     if student_data.get('date_of_birth',None) is not None:
-    #         birthdte.appendChild(root.createTextNode(str(student_data.get('date_of_birth',''))))
-    #     student.appendChild(birthdte)
+        #<BIRTHDTE>
+        birthdte = root.createElement('BIRTHDTE')
+        if student_data.get('date_of_birth',None) is not None:
+            birthdte.appendChild(root.createTextNode(str(student_data.get('date_of_birth',''))))
+        student.appendChild(birthdte)
 
-    #     #<FNAMES>
-    #     fnames = root.createElement('FNAMES')
-    #     if student_data.get('first_name',None) is not None:
-    #         fore_name = student_data.get('first_name')
-    #         if student_data.get('middle_name',None) is not None:
-    #             fore_name = fore_name +' '+student_data.get('middle_name','')
-    #         fnames.appendChild(root.createTextNode(fore_name))
-    #     student.appendChild(fnames)
+        #<FNAMES>
+        fnames = root.createElement('FNAMES')
+        if student_data.get('first_name',None) is not None:
+            fore_name = student_data.get('first_name')
+            if student_data.get('middle_name',None) is not None:
+                fore_name = fore_name +' '+student_data.get('middle_name','')
+            fnames.appendChild(root.createTextNode(fore_name))
+        student.appendChild(fnames)
 
-    #     #<SSN>
-    #     if student_data.get('ssn',None) is not None:
-    #         ssn = root.createElement('SSN')
-    #         ssn.appendChild(root.createTextNode(str(student_data.get('ssn',''))))
-    #         student.appendChild(ssn)
+        #<SSN>
+        if student_data.get('ssn',None) is not None:
+            ssn = root.createElement('SSN')
+            ssn.appendChild(root.createTextNode(str(student_data.get('ssn',''))))
+            student.appendChild(ssn)
 
-    #     #<SURNAME>
-    #     surname = root.createElement('SURNAME')
-    #     if student_data.get('last_name',None) is not None:
-    #         surname.appendChild(root.createTextNode(student_data.get('last_name','')))
-    #     student.appendChild(surname)
+        #<SURNAME>
+        surname = root.createElement('SURNAME')
+        if student_data.get('last_name',None) is not None:
+            surname.appendChild(root.createTextNode(student_data.get('last_name','')))
+        student.appendChild(surname)
 
-    #     #<UCASPERID>
-    #     if student_data.get('ucasperid',None) is not None:
-    #         ucasperid = root.createElement('UCASPERID')
-    #         ucasperid.appendChild(root.createTextNode(str(student_data.get('ucasperid',''))))
-    #         student.appendChild(ucasperid)
+        #<UCASPERID>
+        if student_data.get('ucasperid',None) is not None:
+            ucasperid = root.createElement('UCASPERID')
+            ucasperid.appendChild(root.createTextNode(str(student_data.get('ucasperid',''))))
+            student.appendChild(ucasperid)
 
-    #     #<ULN>
-    #     if student_data.get('uln',None) is not None:
-    #         uln = root.createElement('uln')
-    #         uln.appendChild(root.createTextNode(str(student_data.get('uln',''))))
-    #         student.appendChild(uln)
+        #<ULN>
+        if student_data.get('uln',None) is not None:
+            uln = root.createElement('uln')
+            uln.appendChild(root.createTextNode(str(student_data.get('uln',''))))
+            student.appendChild(uln)
 
-    #     #<EntryProfile>
-    #     entry_profile = root.createElement('EntryProfile')
-    #     student.appendChild(entry_profile)
+        #<EntryProfile>
+        entry_profile = root.createElement('EntryProfile')
+        student.appendChild(entry_profile)
 
-    #     #<NUMHUS>
-    #     numhus = root.createElement('NUMHUS')
-    #     numhus.appendChild(root.createTextNode(str(student_data.get('numhus',''))))
-    #     entry_profile.appendChild(numhus)
+        student_applicant_sql = 'SELECT * FROM `tabStudent Applicant` WHERE name=%s'
+        student_applicant_data = frappe.db.sql(student_applicant_sql, (student_data.get("student_applicant")), as_dict=1)[0]
 
-    #     #<CARELEAVER>
-    #     if student_data.get('careleaver',None) is not None:
-    #         careleaver = root.createElement('CARELEAVER')
-    #         careleaver.appendChild(root.createTextNode(str(student_data.get('careleaver',''))))
-    #         entry_profile.appendChild(careleaver)
+        #<NUMHUS>
+        numhus = root.createElement('NUMHUS')
+        numhus.appendChild(root.createTextNode(str(student_applicant_data.get('numhus',''))))
+        entry_profile.appendChild(numhus)
 
-    #     #<DOMICILE>
-    #     if student_data.get('domicile',None) is not None:
-    #         domicile = root.createElement('DOMICILE')
-    #         domicile.appendChild(root.createTextNode(str(student_data.get('careleaver',''))))
-    #         entry_profile.appendChild(domicile)
+        #<CARELEAVER>
+        if student_applicant_data.get('careleaver',None) is not None:
+            careleaver = root.createElement('CARELEAVER')
+            careleaver.appendChild(root.createTextNode(str(student_applicant_data.get('careleaver',''))))
+            entry_profile.appendChild(careleaver)
 
-    #     #<POSTCODE>
-    #     if student_data.get('postcode',None) is not None:
-    #         postcode = root.createElement('POSTCODE')
-    #         postcode.appendChild(root.createTextNode(str(student_data.get('postcode',''))))
-    #         entry_profile.appendChild(postcode)
+        #<DOMICILE>
+        if student_applicant_data.get('domicile',None) is not None:
+            domicile = root.createElement('DOMICILE')
+            domicile.appendChild(root.createTextNode(str(student_applicant_data.get('careleaver',''))))
+            entry_profile.appendChild(domicile)
 
-    #     #<PREVINST>
-    #     if student_data.get('previnst',None) is not None:
-    #         previnst = root.createElement('PREVINST')
-    #         previnst.appendChild(root.createTextNode(str(student_data.get('previnst',''))))
-    #         entry_profile.appendChild(previnst)
+        #<POSTCODE>
+        if student_applicant_data.get('postcode',None) is not None:
+            postcode = root.createElement('POSTCODE')
+            postcode.appendChild(root.createTextNode(str(student_applicant_data.get('postcode',''))))
+            entry_profile.appendChild(postcode)
 
-    #     #<QUALENT3>
-    #     if student_data.get('qualent3',None) is not None:
-    #         qualent3 = root.createElement('QUALENT3')
-    #         qualent3.appendChild(root.createTextNode(str(student_data.get('qualent3',''))))
-    #         entry_profile.appendChild(qualent3)
+        #<PREVINST>
+        if student_applicant_data.get('previnst',None) is not None:
+            previnst = root.createElement('PREVINST')
+            previnst.appendChild(root.createTextNode(str(student_applicant_data.get('previnst',''))))
+            entry_profile.appendChild(previnst)
 
-    #     if student_data.get('domicile',None) is not None and student_data.get('qualent3',None) is not None:
-    #         if student_data.get('domicile') in DOMICILE_List and student_data.get('qualent3') in QUALENT3_List:
-    #             #<QualificationsOnEntry>
-    #             qualification_on_entry = root.createElement('QualificationsOnEntry')
-    #             entry_profile.appendChild(qualification_on_entry)
+        #<QUALENT3>
+        if student_applicant_data.get('qualent3',None) is not None:
+            qualent3 = root.createElement('QUALENT3')
+            qualent3.appendChild(root.createTextNode(str(student_applicant_data.get('qualent3',''))))
+            entry_profile.appendChild(qualent3)
 
-    #             #<OWNQUAL>
-    #             if student_data.get('ownqual',None) is not None:
-    #                 ownqual = root.createElement('OWNQUAL')
-    #                 ownqual.appendChild(root.createTextNode(str(student_data.get('ownqual',''))))
-    #                 qualification_on_entry.appendChild(ownqual)
+        if student_applicant_data.get('domicile',None) is not None and student_applicant_data.get('qualent3',None) is not None:
+            if student_applicant_data.get('domicile') in DOMICILE_List and student_applicant_data.get('qualent3') in QUALENT3_List:
+                #<QualificationsOnEntry>
+                qualification_on_entry = root.createElement('QualificationsOnEntry')
+                entry_profile.appendChild(qualification_on_entry)
 
-    #             #<QUALGRADE>
-    #             if student_data.get('qualgrade',None) is not None:
-    #                 qualgrade = root.createElement('QUALGRADE')
-    #                 qualgrade.appendChild(root.createTextNode(str(student_data.get('qualgrade',''))))
-    #                 qualification_on_entry.appendChild(qualgrade)
+                #<OWNQUAL>
+                if student_applicant_data.get('ownqual',None) is not None:
+                    ownqual = root.createElement('OWNQUAL')
+                    ownqual.appendChild(root.createTextNode(str(student_applicant_data.get('ownqual',''))))
+                    qualification_on_entry.appendChild(ownqual)
 
-    #             #<QUALSBJ>
-    #             if student_data.get('qualsbj',None) is not None:
-    #                 qualsbj = root.createElement('QUALSBJ')
-    #                 qualsbj.appendChild(root.createTextNode(str(student_data.get('qualsbj',''))))
-    #                 qualification_on_entry.appendChild(qualsbj)
+                #<QUALGRADE>
+                if student_applicant_data.get('qualgrade',None) is not None:
+                    qualgrade = root.createElement('QUALGRADE')
+                    qualgrade.appendChild(root.createTextNode(str(student_applicant_data.get('qualgrade',''))))
+                    qualification_on_entry.appendChild(qualgrade)
 
-    #             #<QUALSIT>
-    #             if student_data.get('qualsit',None) is not None:
-    #                 qualsit = root.createElement('QUALSIT')
-    #                 qualsit.appendChild(root.createTextNode(str(student_data.get('qualsit',''))))
-    #                 qualification_on_entry.appendChild(qualsit)
+                #<QUALSBJ>
+                if student_applicant_data.get('qualsbj',None) is not None:
+                    qualsbj = root.createElement('QUALSBJ')
+                    qualsbj.appendChild(root.createTextNode(str(student_applicant_data.get('qualsbj',''))))
+                    qualification_on_entry.appendChild(qualsbj)
 
-    #             #<QUALTYPE>
-    #             if student_data.get('qualtype',None) is not None:
-    #                 qualtype = root.createElement('QUALTYPE')
-    #                 qualtype.appendChild(root.createTextNode(str(student_data.get('qualtype',''))))
-    #                 qualification_on_entry.appendChild(qualtype)
+                #<QUALSIT>
+                if student_applicant_data.get('qualsit',None) is not None:
+                    qualsit = root.createElement('QUALSIT')
+                    qualsit.appendChild(root.createTextNode(str(student_applicant_data.get('qualsit',''))))
+                    qualification_on_entry.appendChild(qualsit)
 
-    #             #<QUALYEAR>
-    #             if student_data.get('qualyear',None) is not None:
-    #                 qualyear = root.createElement('QUALYEAR')
-    #                 qualyear.appendChild(root.createTextNode(str(student_data.get('qualyear',''))))
-    #                 qualification_on_entry.appendChild(qualyear)
+                #<QUALTYPE>
+                if student_applicant_data.get('qualtype',None) is not None:
+                    qualtype = root.createElement('QUALTYPE')
+                    qualtype.appendChild(root.createTextNode(str(student_applicant_data.get('qualtype',''))))
+                    qualification_on_entry.appendChild(qualtype)
+
+                #<QUALYEAR>
+                if student_applicant_data.get('qualyear',None) is not None:
+                    qualyear = root.createElement('QUALYEAR')
+                    qualyear.appendChild(root.createTextNode(str(student_applicant_data.get('qualyear',''))))
+                    qualification_on_entry.appendChild(qualyear)
 
     #     ##TODO Students Instance - Course
     #     course_enrollment = frappe.db.sql('''SELECT * FROM `tabCourse Enrollment` WHERE student="%s"''' % student_data.get('name'),as_dict=1)
@@ -439,44 +440,44 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
     #         finance_type.appendChild(root.createTextNode(''))
     #         financial_support.appendChild(finance_type)
 
-    #     #<StudentEquality>
-    #     student_equality = root.createElement('StudentEquality')
-    #     student.appendChild(student_equality)
+        #<StudentEquality>
+        student_equality = root.createElement('StudentEquality')
+        student.appendChild(student_equality)
 
-    #     #<DISABLE>
-    #     disable = root.createElement('DISABLE')
-    #     disable.appendChild(root.createTextNode(str(student_data.get('disable',''))))
-    #     student_equality.appendChild(disable)
+        #<DISABLE>
+        disable = root.createElement('DISABLE')
+        disable.appendChild(root.createTextNode(str(student_data.get('disable',''))))
+        student_equality.appendChild(disable)
 
-    #     #<ETHNIC>
-    #     ethnic = root.createElement('ETHNIC')
-    #     ethnic.appendChild(root.createTextNode(str(student_data.get('ethnic',''))))
-    #     student_equality.appendChild(ethnic)
+        #<ETHNIC>
+        ethnic = root.createElement('ETHNIC')
+        ethnic.appendChild(root.createTextNode(str(student_data.get('ethnic',''))))
+        student_equality.appendChild(ethnic)
 
-    #     #<GENDERID> ##TODO check for gender information and genbder to id relation (depends on database design)
-    #     genderid = root.createElement('GENDERID')
-    #     genderid.appendChild(root.createTextNode(str(student_data.get('genderid',''))))
-    #     student_equality.appendChild(genderid)
+        #<GENDERID> ##TODO check for gender information and genbder to id relation (depends on database design)
+        genderid = root.createElement('GENDERID')
+        genderid.appendChild(root.createTextNode(str(student_data.get('genderid',''))))
+        student_equality.appendChild(genderid)
 
-    #     #<NATION> ##TODO check for field name
-    #     nation = root.createElement('NATION')
-    #     nation.appendChild(root.createTextNode(str(student_data.get('nation',''))))
-    #     student_equality.appendChild(nation)
+        #<NATION> ##TODO check for field name
+        nation = root.createElement('NATION')
+        nation.appendChild(root.createTextNode(str(student_data.get('nation',''))))
+        student_equality.appendChild(nation)
 
-    #     #<RELBLF> ##TODO check for field name and name to id relation in doctype
-    #     relblf = root.createElement('RELBLF')
-    #     relblf.appendChild(root.createTextNode(str(student_data.get('relblf',''))))
-    #     student_equality.appendChild(relblf)
+        #<RELBLF> ##TODO check for field name and name to id relation in doctype
+        relblf = root.createElement('RELBLF')
+        relblf.appendChild(root.createTextNode(str(student_data.get('relblf',''))))
+        student_equality.appendChild(relblf)
 
-    #     #<SEXID> ##TODO check for field name to id relation in doctype
-    #     sexid = root.createElement('SEXID')
-    #     sexid.appendChild(root.createTextNode(str(student_data.get('sexid',''))))
-    #     student_equality.appendChild(sexid)
+        #<SEXID> ##TODO check for field name to id relation in doctype
+        sexid = root.createElement('SEXID')
+        sexid.appendChild(root.createTextNode(str(student_data.get('sexid',''))))
+        student_equality.appendChild(sexid)
 
-    #     #<SEXORT> ##TODO check for how field is stored in database
-    #     sexort = root.createElement('SEXORT')
-    #     sexort.appendChild(root.createTextNode(str(student_data.get('sexort',''))))
-    #     student_equality.appendChild(sexort)
+        #<SEXORT> ##TODO check for how field is stored in database
+        sexort = root.createElement('SEXORT')
+        sexort.appendChild(root.createTextNode(str(student_data.get('sexort',''))))
+        student_equality.appendChild(sexort)
     xml_str = root.toprettyxml(indent="\t")
     file_name = "{0}/hesa_return/{1}-HESA-{2}.xml".format(directory_path, str(session + company_data['recid']),
                                                           int(datetime.timestamp(today)))

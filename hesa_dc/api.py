@@ -139,7 +139,7 @@ def create_hesa_dc_sa_return_file(returnType, submissionPurpose, academicYear=No
         for num in range(1, 9):
             if course_data.get('awardbod_'+str(num), None) is not None:
                 awardbod = root.createElement('AWARDBOD')
-                awardbod.appendChild(root.createTextNode(str(course_data.get('awardbod_'+str(num)))))
+                awardbod.appendChild(root.createTextNode(get_code_value_only(str(course_data.get('awardbod_'+str(num))))))
                 course.appendChild(awardbod)
 
         # <COURSEAIM>
